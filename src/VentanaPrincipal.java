@@ -189,6 +189,19 @@ public class VentanaPrincipal {
 	 *       juego.
 	 */
 	public void mostrarFinJuego(boolean porExplosion) {
+		for (int i = 0; i < botonesJuego.length; i++) {
+			for (int j = 0; j < botonesJuego[i].length; j++) {
+				botonesJuego[i][j].setEnabled(false);
+				panelesJuego[i][j].setEnabled(false);
+			}
+		}
+		if (!porExplosion) {
+			JOptionPane.showMessageDialog(ventana, "BOOM! \nQuieres volver a jugar?", "Perdiste!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(ventana, "Quieres volver a jugar?", "Ganaste!",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
 
 	}
 
@@ -196,7 +209,7 @@ public class VentanaPrincipal {
 	 * Método que muestra la puntuación por pantalla.
 	 */
 	public void actualizarPuntuacion() {
-
+		pantallaPuntuacion.setText(String.valueOf(juego.getPuntuacion()));
 	}
 
 	/**

@@ -45,7 +45,11 @@ public class ControlJuego {
 		// lo pongo todo a cero para inicializarlo.
 
 		int cont = 0; // contador minas
-
+		for (int i = 0; i < tablero.length; i++) {
+			for (int j = 0; j < tablero[i].length; j++) {
+				tablero[i][j] = 0;
+			}
+		}
 		// poner 20 bombas
 		while (cont <= MINAS_INICIALES) {
 			int i = (int) (Math.random() * 9) + 0;
@@ -205,27 +209,11 @@ public class ControlJuego {
 	 */
 	public boolean abrirCasilla(int i, int j) {
 		int num = 0;
-		boolean bombaExplotada = false;
-
-		for (i = 0; i < LADO_TABLERO; i++) {
-			for (j = 0; j < LADO_TABLERO; j++) {
-				if (!pulsado[i][j]) {// si no se a pulsado antes...
-
-					// contar el nº de bombas que podrian estar en la casilla pulsada
-					if (tablero[i][j] == MINA) {// si hay una bomba
-						num = -1;
-						bombaExplotada = false;
-					} else {
-						num = calculoMinasAdjuntas(i, j);
-						bombaExplotada = true;
-					}
-					// Indico que se ha pulsado
-					pulsado[i][j] = true;
-				}
-			}
+		if (tablero[i][j] != MINA) {
+			puntuacion++;
+			return true;
 		}
-		return bombaExplotada;
-
+		return false;
 	}
 
 	/**
@@ -236,13 +224,11 @@ public class ControlJuego {
 	 *         minas.
 	 **/
 	public boolean esFinJuego() {
-		boolean ganado = true;
-
-		for (int i = 0; i < alto; i++)
-			for (int j = 0; j < ancho; j++)
-				if (tablero[i][j] == 80)// tienen que ser siempre distintos para ganar (las casillas pulsadas
-										// no son bombas)
-					ganado = false;
+		boolean ganado = false;
+		
+		if (puntuacion == LADO_TABLERO * LADO_TABLERO - MINAS_INICIALES) {
+			ganado=true;;
+		}
 		return ganado;
 	}
 
